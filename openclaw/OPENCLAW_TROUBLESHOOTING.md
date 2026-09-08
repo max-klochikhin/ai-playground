@@ -522,3 +522,18 @@ launchctl load   ~/Library/LaunchAgents/ai.openclaw.gateway.plist
 ```bash
 /Users/max/openclaw/scripts/refresh-vertex-token.sh
 ```
+
+---
+
+## Issue: Vertex 401 after ADC was removed (2026-09-08)
+
+### Symptom
+`gateway.err.log` showed `401 UNAUTHENTICATED` / `ACCESS_TOKEN_TYPE_UNSUPPORTED` on
+`google-vertex/gemini-3-flash-preview`. LaunchAgent still pointed
+`GOOGLE_APPLICATION_CREDENTIALS` at
+`/Users/max/kleinanzeigen_bot/tools/telegram_llm_bot/config/gcloud_credentials.json`,
+which no longer exists.
+
+### Fix
+Switched the gateway to LiteLLM. See [`LITELLM.md`](LITELLM.md). Do not restore the
+Vertex env vars unless you put a valid ADC back.

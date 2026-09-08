@@ -30,10 +30,11 @@ OpenClaw primarily uses `~/.openclaw/openclaw.json` for configuration.
 2. **Telegram Auth (DONE)**:
    - Config path: `channels.telegram.allowFrom`
    - Command: `pnpm start config set channels.telegram.allowFrom "[1297932849]"` (Correct Telegram ID).
-3. **LLM Provider (DONE)**:
-   - Env var: `GEMINI_API_KEY` (renamed from `GOOGLE_AI_API_KEY`).
-   - Default model: `google/gemini-flash-latest`.
-   - Command: `pnpm start models set google/gemini-flash-latest`.
+3. **LLM Provider (UPDATED 2026-09-08)**:
+   - All model I/O goes through LiteLLM: `http://134.98.138.255:4000`
+   - Default model: `litellm/gemini-3-flash-preview`
+   - LaunchAgent uses `LITELLM_API_KEY` (same master key as the Kleinanzeigen bot). Vertex / Gemini env vars removed.
+   - Details: [`LITELLM.md`](LITELLM.md), example config: [`mac-mini/openclaw.json.example`](mac-mini/openclaw.json.example)
 
 ### Step 3: Remote Installation (DONE)
 
@@ -76,7 +77,7 @@ OpenClaw primarily uses `~/.openclaw/openclaw.json` for configuration.
 ## 🛠 Troubleshooting & Notes
 
 - **Agent-Specific Auth Profiles**: Each agent (e.g. `main`) can have its own auth store at `~/.openclaw/agents/<id>/agent/auth-profiles.json`. This **overrides** both global `.env` and `openclaw.json` settings. If you get a "No API key found" or "invalid key" error for a specific agent, check and update this JSON file.
-- **Vertex AI Project Migration**: The active Vertex AI project on the Mac mini is `project-f52e50a4-bf6b-4fb8-aff` (shared with the Kleinanzeigen bot). Both systems now share the same quota and authorization credentials.
+- **LiteLLM (2026-09-08)**: OpenClaw no longer calls Vertex from the Mac mini. The proxy on `134.98.138.255:4000` talks to Vertex. See [`LITELLM.md`](LITELLM.md).
 - **Node.js OAuth Requirement**: When using standard OAuth credentials (`authorized_user` type), the Node.js `google-auth-library` strictly requires the `"token_uri": "https://oauth2.googleapis.com/token"` key to be present in `gcloud_credentials.json`. Without it, token refresh will crash with `Cannot convert undefined or null to object`.
 
 ---
