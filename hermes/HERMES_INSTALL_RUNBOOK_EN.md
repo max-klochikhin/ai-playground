@@ -36,9 +36,10 @@ Install Hermes
 
 | Parameter | Value |
 |-----------|-------|
-| Host | `crazy-home.keenetic.name:2022` |
+| Host | `crazy-home.keenetic.name:2022` (use DNS — **not** `192.168.25.112`) |
 | User | `Max` |
 | SSH | `ssh -p 2022 -i /Users/max.klochikhin/projects/kleinanzeigen-bot/tools/virtual_machines/mac_mini/ssh-keys/id_ed25519_macmini Max@crazy-home.keenetic.name` |
+| SSH config alias | `ssh -F /Users/max.klochikhin/projects/kleinanzeigen-bot/tools/virtual_machines/mac_mini/config/ssh_config mac-mini` |
 | OpenClaw Telegram bot | `@open_claw_ai_assistant_bot` |
 | Hermes Telegram bot | `@hermes_ai_assistent_bot` |
 | Telegram user ID (primary) | `1297932849` |
@@ -58,8 +59,16 @@ Do **not** create new GCP keys or a service account — reuse what already works
 
 ### 1.1 SSH into the Mac mini
 
+Always use the **Keenetic DNS name** (`crazy-home.keenetic.name:2022`), not the local IP.
+
 ```bash
 ssh -p 2022 -i /Users/max.klochikhin/projects/kleinanzeigen-bot/tools/virtual_machines/mac_mini/ssh-keys/id_ed25519_macmini Max@crazy-home.keenetic.name
+```
+
+Or via SSH config:
+
+```bash
+ssh -F /Users/max.klochikhin/projects/kleinanzeigen-bot/tools/virtual_machines/mac_mini/config/ssh_config mac-mini
 ```
 
 ### 1.2 Optional: backup OpenClaw (for rollback)
